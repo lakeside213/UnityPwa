@@ -14,6 +14,7 @@ class Menu extends Component {
   };
   render() {
     let { dropdownOpen } = this.state;
+    let { auth } = this.props;
     return (
       <div class="header__menu">
         <div
@@ -36,26 +37,32 @@ class Menu extends Component {
           data-dropdown-list="menu"
         >
           <div>
-            <ul class="dropdown__catalog row">
-              <li class="col-xs-6">
-                <a href="#">New</a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#">Unread</a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#">Groups</a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#">Users</a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#">Tags</a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#">Shortcuts</a>
-              </li>
-            </ul>
+            {auth.authenticated ? (
+              <ul class="dropdown__catalog row">
+                <li class="col-xs-6">
+                  <a href="#">New</a>
+                </li>
+                <li class="col-xs-6">
+                  <a href="#">Unread</a>
+                </li>
+                <li class="col-xs-6">
+                  <a href="#">Groups</a>
+                </li>
+                <li class="col-xs-6">
+                  <a href="#">Users</a>
+                </li>
+                <li class="col-xs-6">
+                  <a href="#">Tags</a>
+                </li>
+                <li class="col-xs-6">
+                  <a href="#">Shortcuts</a>
+                </li>
+              </ul>
+            ) : (
+              <button class="signup__btn-create btn btn--type-02" type="submit">
+                Login
+              </button>
+            )}
           </div>
           <div>
             <h3>Categories</h3>
