@@ -83,7 +83,7 @@ class User extends Component {
       );
     } else {
       return (
-        <div class="header__menu">
+        <div class="header__menu" id="#hideMobile">
           <div className="header__menu-btn">
             <Link to="/auth/login">
               <i className="icon-Login_signup" />

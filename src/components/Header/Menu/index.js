@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 class Menu extends Component {
   state = {
     dropdownOpen: false
@@ -59,8 +59,8 @@ class Menu extends Component {
                 </li>
               </ul>
             ) : (
-              <button class="signup__btn-create btn btn--type-02" type="submit">
-                Login
+              <button class="signup__btn-create btn btn--type-02">
+                <Link to="/auth/login">Login</Link>
               </button>
             )}
           </div>

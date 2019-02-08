@@ -18,7 +18,11 @@
 
   }
 }
-
+@media only screen and (max-width: 1024px) {
+    #hideMobile {
+        display: none;
+    }
+}
 .activity_Desc {
   margin-bottom: -6px;
 }
@@ -2746,11 +2750,7 @@ select {
     border-right: solid 1px #e9ecee;
   }
 }
-@media only screen and (max-width: 1039px) {
-  .header__logo {
-    margin-left: 15px;
-  }
-}
+
 .header__logo > h1,
 .header__logo > a {
   align-items: center;
