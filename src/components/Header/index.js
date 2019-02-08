@@ -18,6 +18,7 @@ class Header extends Component {
     this.setState({ dropdownOpen: false });
   };
   render() {
+    let { searchOpen } = this.state;
     let { auth } = this.props;
     console.log(JSON.stringify(auth.user));
 
