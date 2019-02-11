@@ -1,9 +1,19 @@
 import React, { Component } from "react";
-
+import axios from "axios";
 class PostAvatar extends Component {
   state = {
-    dropdownOpen: false
+    dropdownOpen: false,
+    user: {}
   };
+
+  componentDidMount() {
+    axios
+      .post("http://localhost:8080/user", { id: this.props.userID })
+      .then(res => {
+        const user = res.data[0];
+        this.setState({ user });
+      });
+  }
   handleClick = event => {
     this.setState(prevState => {
       return { dropdownOpen: !prevState.dropdownOpen };
@@ -13,12 +23,14 @@ class PostAvatar extends Component {
     this.setState({ dropdownOpen: false });
   };
   render() {
-    let { dropdownOpen } = this.state;
+    let { dropdownOpen, user } = this.state;
     return (
       <div>
         <a href="#" className="avatar">
           <img
-            src="/assets/images/avatars/T.svg"
+            src={`/assets/images/avatars/${
+              !user.username ? "" : user.username.charAt(0).toUpperCase()
+            }.svg`}
             alt="avatar"
             data-dropdown-btn="user-t"
             onClick={this.handleClick}
@@ -35,7 +47,7 @@ class PostAvatar extends Component {
         >
           <div className="dropdown__user">
             <a href="#" className="dropdown__user-label bg-00bd9d">
-              T
+              {!user.username ? "" : user.username.charAt(0).toUpperCase()}
             </a>
             <div className="dropdown__user-nav">
               <a href="#">
@@ -46,7 +58,7 @@ class PostAvatar extends Component {
               </a>
             </div>
             <div className="dropdown__user-info">
-              <a href="#">Tesla Motors</a>
+              <a href="#">{user.username}</a>
               <p>Last post 4 hours ago. Joined Jun 1, 16</p>
             </div>
 

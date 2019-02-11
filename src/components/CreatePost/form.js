@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-
+import { compose } from "redux";
+import { withRouter } from "react-router-dom";
+import { createPost } from "../../actions/postActions";
+import { connect } from "react-redux";
 import Multiselect from "react-widgets/lib/Multiselect";
 import "react-widgets/dist/css/react-widgets.css";
+
 class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
   renderInput({ input, labelName, placeholder, meta, type }) {
     return (
       <div class="create__section">
@@ -20,6 +29,26 @@ class Form extends Component {
           type={type}
           placeholder={placeholder}
           {...input}
+        />
+      </div>
+    );
+  }
+  renderTextField({ input, labelName, meta }) {
+    return (
+      <div className="create__section create__textarea">
+        <label className="create__label" for="description">
+          {labelName}{" "}
+          {meta.touched && meta.error ? (
+            <small className="text-danger">{meta.error}</small>
+          ) : (
+            ""
+          )}
+        </label>
+
+        <textarea
+          className="form-control"
+          {...input}
+          placeholder="write something"
         />
       </div>
     );
@@ -71,7 +100,9 @@ class Form extends Component {
   }
 
   onSubmit(formValues) {
+    const { createPost, history } = this.props;
     console.log(formValues);
+    createPost(formValues, history);
   }
   render() {
     const { handleSubmit } = this.props;
@@ -104,49 +135,24 @@ class Form extends Component {
           </div>
           <div class="col-md-6" />
         </div>
-        <div class="create__section create__textarea">
-          <label class="create__label" for="description">
-            Description
-          </label>
-
-          <textarea class="form-control" id="description" />
-        </div>
-
+        <Field
+          name="description"
+          component={this.renderTextField}
+          labelName="Description"
+        />
         <Field
           name="hobbies"
           component={this.renderMultiselect}
           data={["Guitar", "Cycling", "Hiking"]}
         />
-        <div class="create__advanced">
-          <div class="row">
-            <div class="col-lg-4 col-xl-4">
-              <Field
-                name="postVisibility"
-                component={this.renderRadio}
-                question="Who can see this post?"
-                option1="Everyone"
-                option2="Friends"
-              />
-            </div>
 
-            <div class="col-lg-4 col-xl-5">
-              <Field
-                name="postMaturity"
-                component={this.renderRadio}
-                question="Is this a Mature Thread?"
-                option1="Yes"
-                option2="No"
-              />
-            </div>
-          </div>
-        </div>
         <div class="create__footer">
           <a href="#" class="create__btn-cansel btn">
             Cancel
           </a>
-          <a href="#" class="create__btn-create btn btn--type-02">
+          <button className="create__btn-create btn btn--type-02" type="submit">
             Create Thread
-          </a>
+          </button>
         </div>
       </form>
     );
@@ -178,7 +184,14 @@ const validate = formValues => {
 
   return errors;
 };
-export default reduxForm({
-  form: "createpost",
-  validate
-})(Form);
+
+export default compose(
+  connect(
+    null,
+    { createPost }
+  ),
+  reduxForm({
+    form: "createpost",
+    validate
+  })
+)(withRouter(Form));

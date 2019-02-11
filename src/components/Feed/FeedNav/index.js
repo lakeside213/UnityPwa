@@ -1,68 +1,51 @@
 import React, { Component } from "react";
 import Dropdown from "./navDropdown";
-import { NavLink } from "react-router-dom";
+import Tag from "../../utils/components/tag";
+import Category from "../../utils/components/category";
+import NavLink from "../../utils/components/navLink";
+import { withRouter } from "react-router-dom";
 class FeedNav extends Component {
+  state = {
+    tag: "all tags",
+    category: "all categories"
+  };
+  componentDidMount() {
+    const { tag, category } = this.props.match.params;
+    if (tag) {
+      this.setState({ tag });
+    }
+    if (category) {
+      this.setState({ category });
+    }
+  }
   render() {
+    let { tag, category } = this.state;
     return (
       <div class="nav">
         <div class="nav__categories js-dropdown">
-          <Dropdown name="All Categories">
+          <Dropdown name={category}>
             <ul class="dropdown__catalog row">
-              <li class="col-xs-6">
-                <a href="#" class="category">
-                  <i class="bg-f9bc64" />
-                  Hobbies
-                </a>
-              </li>
-              <li class="col-xs-6">
-                <a href="#" class="category">
-                  <i class="bg-348aa7" />
-                  Social
-                </a>
-              </li>
+              <Category categoryName="gaming " categoryColor="4f87b0" />
+              <Category categoryName="all " categoryColor="4f87b0" />
             </ul>
           </Dropdown>
-          <Dropdown name="Tags">
+          <Dropdown name={tag}>
             <div class="tags">
-              <a href="#" class="bg-4f80b0">
-                gaming
-              </a>
-              <a href="#" class="bg-424ee8">
-                nature
-              </a>
-              <a href="#" class="bg-36b7d7">
-                entertainment
-              </a>
-              <a href="#" class="bg-ef429e">
-                selfie
-              </a>
+              <Tag tagName="all " tagColor="4f87b0" />
+              <Tag tagName="gaming" tagColor="4f80b0" />
             </div>
           </Dropdown>
         </div>
         <div class="nav__menu js-dropdown">
           <Dropdown name="Latest">
             <ul class="dropdown__catalog">
-              <li>
-                <a href="#">Latest</a>
-              </li>
-              <li>
-                <a href="#">Follow Feed</a>
-              </li>
-              <li>
-                <a href="#">Top</a>
-              </li>
-
-              <li>
-                <a href="#">Most Liked</a>
-              </li>
+              <NavLink linkName="latest" />
             </ul>
           </Dropdown>
           <ul>
+            <NavLink linkName="latest" />
             <li>
-              <NavLink to="/app/">Latest</NavLink>
-            </li>
-            <li>
-              <NavLink to="/followfeed">Follow Feed</NavLink>
+              <NavLink to="/app/followfeed">Follow Feed</NavLink>
             </li>
             <li>
               <NavLink to="/app/top">Top</NavLink>
@@ -78,4 +61,4 @@ class FeedNav extends Component {
   }
 }
 
-export default FeedNav;
+export default withRouter(FeedNav);

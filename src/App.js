@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./animation.css";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import {
@@ -17,9 +17,6 @@ import { fetchUser } from "./actions/authActions";
 const supportsHistory = "pushState" in window.history;
 
 class App extends Component {
-  state = {
-    loggedIn: false
-  };
   componentDidMount() {
     let { auth, fetchUser } = this.props;
     if (auth) {
@@ -27,30 +24,18 @@ class App extends Component {
     }
   }
   render() {
-    const { loggedIn } = this.state;
     return (
       <Router forceRefresh={!supportsHistory}>
         <ScrollToTop>
           <Route
             render={({ location }) => (
-              <div>
-                <TransitionGroup>
-                  <CSSTransition
-                    key={location.key}
-                    classNames="page"
-                    timeout={{
-                      enter: 1000,
-                      exit: 1000
-                    }}
-                  >
-                    <Switch location={location}>
-                      <Redirect exact from="/" to="/app" />
-                      <Route component={Main} path="/app" />
-                      <Route component={Auth} path="/auth" />
-                    </Switch>
-                  </CSSTransition>
-                </TransitionGroup>
-              </div>
+              <Fragment>
+                <Switch location={location}>
+                  <Redirect exact from="/" to="/app" />
+                  <Route component={Main} path="/app" />
+                  <Route component={Auth} path="/auth" />
+                </Switch>
+              </Fragment>
             )}
           />
         </ScrollToTop>

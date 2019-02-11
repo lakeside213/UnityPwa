@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Clickaway from "../../utils/Clickaway";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 class User extends Component {
   state = {
@@ -17,7 +16,7 @@ class User extends Component {
   };
   render() {
     let { dropdownOpen } = this.state;
-    let { auth } = this.props;
+    let { auth, signout, user } = this.props;
 
     if (auth.authenticated) {
       return (
@@ -32,8 +31,13 @@ class User extends Component {
               data-dropdown-btn="user"
               onClick={this.handleClick}
             >
-              <img src={`/assets/images/avatars/A.svg`} alt="avatar" />
-
+              <img
+                src={`/assets/images/avatars/${
+                  !user.username ? "" : user.username.charAt(0).toUpperCase()
+                }.svg`}
+                alt="avatar"
+              />
+              {user.username}
               <i className="icon-Arrow_Below" />
             </div>
             <nav
@@ -55,7 +59,7 @@ class User extends Component {
                   <a href="#">
                     <i className="icon-Preferences" />
                   </a>
-                  <a href="#">
+                  <a href="#" onClick={signout}>
                     <i className="icon-Logout" />
                   </a>
                 </div>
@@ -95,7 +99,4 @@ class User extends Component {
     }
   }
 }
-export default connect(
-  null,
-  null
-)(User);
+export default User;

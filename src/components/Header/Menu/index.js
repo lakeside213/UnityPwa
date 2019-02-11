@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
 class Menu extends Component {
   state = {
     dropdownOpen: false
   };
+
   handleClick = event => {
     this.setState(prevState => {
       return { dropdownOpen: !prevState.dropdownOpen };
@@ -13,8 +15,8 @@ class Menu extends Component {
     this.setState({ dropdownOpen: false });
   };
   render() {
-    let { dropdownOpen } = this.state;
-    let { auth } = this.props;
+    let { dropdownOpen, feedName } = this.state;
+    let { auth, signout } = this.props;
     return (
       <div class="header__menu">
         <div
@@ -25,7 +27,7 @@ class Menu extends Component {
           }
           onClick={this.handleClick}
         >
-          Categories
+          Menu
           <i class="icon-Menu_Icon" />
         </div>
         <nav
@@ -36,6 +38,26 @@ class Menu extends Component {
           }
           data-dropdown-list="menu"
         >
+          {auth.authenticated ? (
+            <div id="hideDesktop">
+              <div className="dropdown__icons">
+                <a href="#">
+                  <i className="icon-Bookmark" />
+                </a>
+                <a href="#">
+                  <i className="icon-Message" />
+                </a>
+                <a href="#">
+                  <i className="icon-Preferences" />
+                </a>
+                <a href="#" onClick={signout}>
+                  <i className="icon-Logout" />
+                </a>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           <div>
             {auth.authenticated ? (
               <ul class="dropdown__catalog row">

@@ -4,7 +4,15 @@ import { reset } from "redux-form";
 
 export const fetchUser = () => {
   return async function(dispatch) {
-    const response = await axios.get("http://localhost:8080/current_user");
+    let config = {
+      headers: {
+        authorization: localStorage.getItem("token")
+      }
+    };
+    const response = await axios.get(
+      "http://localhost:8080/current_user",
+      config
+    );
     console.log(response.data);
     dispatch({
       type: FETCH_USER,
@@ -45,9 +53,8 @@ export const signin = ({ email, password }, history, from) => {
         password
       });
 
-      dispatch(reset("sigin"));
+      dispatch(reset("signin"));
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
       history.push(from.pathname);
       dispatch({
         type: AUTH_USER,
@@ -55,22 +62,17 @@ export const signin = ({ email, password }, history, from) => {
       });
       dispatch(fetchUser());
     } catch (e) {
+      console.log(e);
       dispatch({ type: AUTH_ERROR, payload: "Email or Username in use " });
     }
-  };
-};
-export const fetchAuth = () => {
-  return {
-    type: FETCH_AUTH
   };
 };
 
 export const signout = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("user");
+
   return {
     type: AUTH_USER,
-    payload: "",
-    user: {}
+    payload: ""
   };
 };

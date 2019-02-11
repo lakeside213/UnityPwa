@@ -23,6 +23,11 @@
         display: none;
     }
 }
+@media only screen and (min-width: 1024px) {
+    #hideDesktop {
+        display: none;
+    }
+}
 .activity_Desc {
   margin-bottom: -6px;
 }
@@ -1216,7 +1221,7 @@ select {
   .posts__item .posts__activity {
     padding-top: 4px;
     margin-top: 4px;
-        margin-right: -16px;
+        margin-right: -4px;
     border-top: solid 1px #e9ecee;
   }
 }

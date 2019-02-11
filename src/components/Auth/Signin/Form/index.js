@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { connect } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { signin } from "../../../../actions/authActions";
 class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
   renderInput({ input, labelName, placeholder, meta, type }) {
     return (
       <div class="signup__section">
@@ -24,7 +32,9 @@ class Form extends Component {
     );
   }
   onSubmit(formValues) {
-    console.log(formValues);
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { signin, history } = this.props;
+    signin(formValues, history, from);
   }
   render() {
     const { handleSubmit } = this.props;
@@ -32,11 +42,11 @@ class Form extends Component {
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div class="signup__form">
           <Field
-            name="username"
+            name="email"
             type="text"
-            placeholder="Enter your username"
+            placeholder="Enter your email"
             component={this.renderInput}
-            labelName="Username"
+            labelName="Email"
           />
 
           <Field
@@ -84,7 +94,13 @@ const validate = formValues => {
 
   return errors;
 };
-export default reduxForm({
-  form: "login",
-  validate
-})(Form);
+export default compose(
+  connect(
+    null,
+    { signin }
+  ),
+  reduxForm({
+    form: "login",
+    validate
+  })
+)(withRouter(Form));

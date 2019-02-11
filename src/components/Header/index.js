@@ -5,6 +5,7 @@ import Search from "./Search";
 import Menu from "./Menu";
 import User from "./User";
 import { connect } from "react-redux";
+import { signout } from "../../actions/authActions";
 class Header extends Component {
   state = {
     searchOpen: false
@@ -19,8 +20,7 @@ class Header extends Component {
   };
   render() {
     let { searchOpen } = this.state;
-    let { auth } = this.props;
-    console.log(JSON.stringify(auth.user));
+    let { auth, signout, user } = this.props;
 
     return (
       <header>
@@ -47,19 +47,14 @@ class Header extends Component {
             </Link>
 
             <Search toggle={this.handleClick} close={this.handleClose} />
-            <Menu auth={auth} />
+            <Menu auth={auth} signout={signout} />
             <Notifications auth={auth} />
 
-            <User auth={auth} />
+            <User auth={auth} user={user} signout={signout} />
           </div>
           {auth.authenticated ? (
             <div className="header__offset-btn">
-              <Link
-                to={{
-                  pathname: "/app/create",
-                  state: { prev: true }
-                }}
-              >
+              <Link to="/app/create">
                 <img src="/assets/images/New_Topic.svg" alt="New Topic" />
               </Link>
             </div>
@@ -73,9 +68,9 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth };
+  return { auth: state.auth, user: state.user };
 }
 export default connect(
   mapStateToProps,
-  null
+  { signout }
 )(Header);

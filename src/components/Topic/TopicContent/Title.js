@@ -2,14 +2,13 @@ import React, { Component } from "react";
 
 class Heading extends Component {
   render() {
+    const { title, category, tags } = this.props;
     return (
       <div class="topics__heading">
-        <h2 class="topics__heading-title">
-          Which movie have you watched most recently?
-        </h2>
+        <h2 class="topics__heading-title">{title}</h2>
         <div class="topics__heading-info">
           <a href="#" class="category">
-            <i class="bg-3ebafa" /> Exchange
+            <i class="bg-3ebafa" /> {category}
           </a>
           <div class="tags">
             <a href="#" class="bg-4f80b0">
