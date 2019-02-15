@@ -67,17 +67,10 @@ class User extends Component {
               <div>
                 <ul className="dropdown__catalog">
                   <li>
-                    <a href="#">Dashboard</a>
-                  </li>
-
-                  <li>
-                    <a href="#">Topics</a>
+                    <Link to={`/app/user/${user._id}/posts`}>Posts</Link>
                   </li>
                   <li>
-                    <a href="#">Likes</a>
-                  </li>
-                  <li>
-                    <a href="#">Solved</a>
+                    <Link to={`/app/user/${user._id}/activity`}>Activity</Link>
                   </li>
                 </ul>
               </div>

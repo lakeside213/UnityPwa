@@ -4,6 +4,10 @@ import Tag from "../../utils/components/tag";
 import Category from "../../utils/components/category";
 import NavLink from "../../utils/components/navLink";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { filterPosts } from "../../../actions/postActions";
+import CATEGORIES from "../../utils/data/categories";
+import TAGS from "../../utils/data/tags";
 class FeedNav extends Component {
   state = {
     tag: "all tags",
@@ -16,6 +20,7 @@ class FeedNav extends Component {
     }
     if (category) {
       this.setState({ category });
+      this.props.filterPosts(category);
     }
   }
   render() {
@@ -25,14 +30,23 @@ class FeedNav extends Component {
         <div class="nav__categories js-dropdown">
           <Dropdown name={category}>
             <ul class="dropdown__catalog row">
-              <Category categoryName="gaming " categoryColor="4f87b0" />
+              {CATEGORIES.map(category => (
+                <Category
+                  categoryName={category.categoryName}
+                  categoryColor={category.categoryColor}
+                  menu={true}
+                />
+              ))}
+
               <Category categoryName="all " categoryColor="4f87b0" />
             </ul>
           </Dropdown>
           <Dropdown name={tag}>
             <div class="tags">
+              {TAGS.map(tag => (
+                <Tag tagName={tag.tagName} tagColor={tag.tagColor} />
+              ))}
               <Tag tagName="all " tagColor="4f87b0" />
-              <Tag tagName="gaming" tagColor="4f80b0" />
             </div>
           </Dropdown>
         </div>
@@ -44,16 +58,6 @@ class FeedNav extends Component {
           </Dropdown>
           <ul>
             <NavLink linkName="latest" />
-            <li>
-              <NavLink to="/app/followfeed">Follow Feed</NavLink>
-            </li>
-            <li>
-              <NavLink to="/app/top">Top</NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/liked">Most Liked</NavLink>
-            </li>
           </ul>
         </div>
       </div>
@@ -61,4 +65,9 @@ class FeedNav extends Component {
   }
 }
 
-export default withRouter(FeedNav);
+export default withRouter(
+  connect(
+    null,
+    { filterPosts }
+  )(FeedNav)
+);

@@ -132,6 +132,10 @@
   content: "\e91a";
   color: #5b6166;
 }
+.icon-Favorite_Topic_Fill:before {
+  content: "\e91a";
+  color: #5b6166;
+}
 .icon-Flag_Topic:before {
   content: "\e91b";
   color: #5b6166;

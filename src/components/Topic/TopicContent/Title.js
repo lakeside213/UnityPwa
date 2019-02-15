@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Category from "../../utils/components/category";
 class Heading extends Component {
   render() {
     const { title, category, tags } = this.props;
@@ -7,9 +7,8 @@ class Heading extends Component {
       <div class="topics__heading">
         <h2 class="topics__heading-title">{title}</h2>
         <div class="topics__heading-info">
-          <a href="#" class="category">
-            <i class="bg-3ebafa" /> {category}
-          </a>
+          <Category categoryName={category} />
+
           <div class="tags">
             <a href="#" class="bg-4f80b0">
               gaming

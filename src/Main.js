@@ -13,10 +13,11 @@ const Main = ({ match }) => {
     <Fragment>
       <Header />
       <Switch>
+        <Route path={`${match.path}/user/:id/:feed`} component={User} />
+        <Route path={`${match.path}/user/:id`} component={User} />
         <Route path={`${match.path}/tags/:tag`} component={Feed} />
         <Route path={`${match.path}/categories/:category`} component={Feed} />
         <Route path={`${match.path}/topic/:id`} component={Topic} />
-        <Route path={`${match.path}/user`} component={User} />
 
         <Route path={`${match.path}/create`} component={CreatePost} />
         <Route path={`${match.path}/:feed`} component={Feed} />

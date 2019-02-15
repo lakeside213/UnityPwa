@@ -6,7 +6,8 @@ import { createPost } from "../../actions/postActions";
 import { connect } from "react-redux";
 import Multiselect from "react-widgets/lib/Multiselect";
 import "react-widgets/dist/css/react-widgets.css";
-
+import CATEGORIES from "../utils/data/categories";
+import TAGS from "../utils/data/tags";
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -101,7 +102,7 @@ class Form extends Component {
 
   onSubmit(formValues) {
     const { createPost, history } = this.props;
-    console.log(formValues);
+
     createPost(formValues, history);
   }
   render() {
@@ -126,9 +127,11 @@ class Form extends Component {
                   <option value="" disabled selected>
                     Select a category
                   </option>
-                  <option value="ff0000">Red</option>
-                  <option value="00ff00">Green</option>
-                  <option value="0000ff">Blue</option>
+                  {CATEGORIES.map(category => (
+                    <option value={category.categoryName}>
+                      {category.categoryName}
+                    </option>
+                  ))}
                 </Field>
               </label>
             </div>
@@ -143,7 +146,7 @@ class Form extends Component {
         <Field
           name="hobbies"
           component={this.renderMultiselect}
-          data={["Guitar", "Cycling", "Hiking"]}
+          data={TAGS.map(tag => tag.tagName)}
         />
 
         <div class="create__footer">
@@ -160,26 +163,12 @@ class Form extends Component {
 }
 const validate = formValues => {
   const errors = {};
-  if (!formValues.email) {
-    errors.email = "Enter a valid email";
+  if (!formValues.title) {
+    errors.email = "Enter a title";
   }
-  if (!formValues.firstName) {
-    errors.firstName = "Enter your firstname";
-  }
-  if (!formValues.lastName) {
-    errors.lastName = "Enter your lastname";
-  }
-  if (!formValues.username) {
-    errors.username = "Enter your username";
-  }
-  if (!formValues.password) {
-    errors.password = "Enter your password";
-  }
-  if (!formValues.confirmPassword) {
-    errors.confirmPassword = "Enter your password";
-  }
-  if (formValues.password == !formValues.confirmPassword) {
-    errors.password = "Passwords do not match";
+
+  if (!formValues.description) {
+    errors.lastName = "Enter your description";
   }
 
   return errors;

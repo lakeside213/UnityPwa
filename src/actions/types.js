@@ -8,3 +8,7 @@ export const FETCH_USER = "FETCH_USER";
 export const CREATE_POST = "CREATE_POST";
 export const FETCH_POSTS = "FETCH_POSTS";
 export const FETCH_POST = "FETCH_POST";
+export const POST_COMMENT = "POST_COMMENT";
+export const FETCH_COMMENTS = "FETCH_COMMENTS";
+export const FETCH_PROFILE = "FETCH_PROFILE";
+export const BOOKMARK_POST = "BOOKMARK_POST";

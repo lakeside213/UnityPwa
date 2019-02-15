@@ -17,13 +17,15 @@ class Posts extends Component {
             title={post.title}
             category={post.category}
             userID={post._user}
+            views={post.views}
+            createdAt={post.createdAt}
+            tags={post.tags}
           />
         </Fragment>
       );
     });
   }
   render() {
-    console.log(this.props.posts);
     return (
       <div class="posts">
         <Headings />

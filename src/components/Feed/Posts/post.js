@@ -1,7 +1,9 @@
 import React from "react";
 import Avatar from "./postAvatar";
 import { Link } from "react-router-dom";
+import dateFns from "date-fns";
 import Tag from "../../utils/components/tag";
+import Category from "../../utils/components/category";
 export default function Post({
   id,
   title,
@@ -10,35 +12,38 @@ export default function Post({
   views,
   userID,
   createdAt,
-  tags
+  tags,
+  background
 }) {
   return (
-    <div class="posts__item">
+    <div class={`posts__item ${background}`}>
       <div class="posts__section-left">
         <div class="posts__topic">
           <div class="posts__content">
             <Link to={`/app/topic/${id}`}>
-              <i class="icon-Locked" />
               <h3>{title}</h3>
             </Link>
             <div class="posts__tags tags">
-              <Tag tagName="funny" tagColor="3a3a17" />
+              {tags ? tags.map(tag => <Tag tagName={tag.name} />) : ""}
             </div>
           </div>
         </div>
         <div class="posts__category">
-          <a href="#" class="category">
-            <i class="bg-3ebafa" /> {category}
-          </a>
+          <Category categoryName={category} />
         </div>
       </div>
       <div class="posts__section-right">
         <div class="posts__users">
           <Avatar userID={userID} />
         </div>
-        <div class="posts__replies">207</div>
-        <div class="posts__views">7.5k{""}</div>
-        <div class="posts__activity">41m </div>
+
+        <div class="posts__views">
+          {views}
+          {""}
+        </div>
+        <div class="posts__activity">
+          {dateFns.distanceInWordsToNow(dateFns.parse(createdAt))}
+        </div>
       </div>
     </div>
   );

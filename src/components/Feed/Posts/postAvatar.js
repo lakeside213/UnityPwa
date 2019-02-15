@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import dateFns from "date-fns";
 class PostAvatar extends Component {
   state = {
     dropdownOpen: false,
@@ -8,13 +10,17 @@ class PostAvatar extends Component {
 
   componentDidMount() {
     axios
-      .post("http://localhost:8080/user", { id: this.props.userID })
+      .post("https://morning-brook-29277.herokuapp.com/api/user", {
+        id: this.props.userID
+      })
       .then(res => {
-        const user = res.data[0];
+        const user = res.data;
+
         this.setState({ user });
       });
   }
   handleClick = event => {
+    event.preventDefault();
     this.setState(prevState => {
       return { dropdownOpen: !prevState.dropdownOpen };
     });
@@ -24,12 +30,14 @@ class PostAvatar extends Component {
   };
   render() {
     let { dropdownOpen, user } = this.state;
+    let { userID } = this.props;
+    let { username, joined, postsLength, commentsLength } = user;
     return (
       <div>
         <a href="#" className="avatar">
           <img
             src={`/assets/images/avatars/${
-              !user.username ? "" : user.username.charAt(0).toUpperCase()
+              !username ? "" : username.charAt(0).toUpperCase()
             }.svg`}
             alt="avatar"
             data-dropdown-btn="user-t"
@@ -47,7 +55,7 @@ class PostAvatar extends Component {
         >
           <div className="dropdown__user">
             <a href="#" className="dropdown__user-label bg-00bd9d">
-              {!user.username ? "" : user.username.charAt(0).toUpperCase()}
+              {!username ? "" : username.charAt(0).toUpperCase()}
             </a>
             <div className="dropdown__user-nav">
               <a href="#">
@@ -58,16 +66,16 @@ class PostAvatar extends Component {
               </a>
             </div>
             <div className="dropdown__user-info">
-              <a href="#">{user.username}</a>
-              <p>Last post 4 hours ago. Joined Jun 1, 16</p>
+              <Link to={`/app/user/${userID}/posts`}>{username}</Link>
+              <p>Joined {dateFns.distanceInWordsToNow(new Date(joined))} ago</p>
             </div>
 
             <div className="dropdown__user-statistic">
               <div>
-                Threads - <span>1184</span>
+                Threads - <span>{postsLength}</span>
               </div>
               <div>
-                Posts - <span>5,863</span>
+                comments - <span>{commentsLength}</span>
               </div>
             </div>
           </div>

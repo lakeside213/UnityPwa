@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 const myBtn = {
   display: "show",
   position: "fixed",
@@ -14,14 +14,18 @@ const myBtn = {
   borderRadius: "10px" /* Rounded corners */,
   fontSize: "18px" /* Increase font size */
 };
-export default function CreatePostBtn() {
-  return (
-    <Link to="/app/create" style={myBtn} id="hideDesktop">
-      <img
-        src="/assets/images/New_Topic.svg"
-        alt="New Topic"
-        style={{ height: "40px" }}
-      />
-    </Link>
-  );
-}
+export default withRouter(function CreatePostBtn({ pageName, location }) {
+  if (location.pathname !== "/app/create") {
+    return (
+      <Link to="/app/create" style={myBtn} id="hideDesktop">
+        <img
+          src="/assets/images/New_Topic.svg"
+          alt="New Topic"
+          style={{ height: "40px" }}
+        />
+      </Link>
+    );
+  } else {
+    return "";
+  }
+});

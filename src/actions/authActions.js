@@ -10,10 +10,10 @@ export const fetchUser = () => {
       }
     };
     const response = await axios.get(
-      "http://localhost:8080/current_user",
+      "https://morning-brook-29277.herokuapp.com/current_user",
       config
     );
-    console.log(response.data);
+
     dispatch({
       type: FETCH_USER,
       payload: response.data
@@ -24,11 +24,14 @@ export const fetchUser = () => {
 export const signup = ({ username, email, password }, history, from) => {
   return async function(dispatch) {
     try {
-      const res = await axios.post("http://localhost:8080/signup", {
-        username,
-        email,
-        password
-      });
+      const res = await axios.post(
+        "https://morning-brook-29277.herokuapp.com/signup",
+        {
+          username,
+          email,
+          password
+        }
+      );
 
       dispatch(reset("signup"));
       localStorage.setItem("token", res.data.token);
@@ -48,10 +51,13 @@ export const signup = ({ username, email, password }, history, from) => {
 export const signin = ({ email, password }, history, from) => {
   return async function(dispatch) {
     try {
-      const res = await axios.post("http://localhost:8080/signin", {
-        email,
-        password
-      });
+      const res = await axios.post(
+        "https://morning-brook-29277.herokuapp.com/signin",
+        {
+          email,
+          password
+        }
+      );
 
       dispatch(reset("signin"));
       localStorage.setItem("token", res.data.token);

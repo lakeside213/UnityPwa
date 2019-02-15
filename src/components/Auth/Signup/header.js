@@ -5,10 +5,10 @@ export default function Header() {
     <header class="signup__header">
       <div class="container">
         <div class="signup__logo">
-          <a href="#">
+          <Link to="/">
             <img src="/logo.svg" alt="logo" />
             Unity
-          </a>
+          </Link>
         </div>
         <div class="signup__header-content">
           <p>

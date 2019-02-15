@@ -28,7 +28,7 @@ class Notifications extends Component {
         >
           <div className="header__notification-btn" onClick={this.handleClick}>
             <i className="icon-Notification" />
-            <span>2</span>
+            <span>0</span>
           </div>
           <ReactCSSTransitionGroup
             transitionName="example"
@@ -44,8 +44,7 @@ class Notifications extends Component {
               data-dropdown-list="notification"
             >
               <div>
-                <Notification key={0} />
-                <Notification key={1} />
+                <span>No new notifications!</span>
                 <span>
                   <a href="#">view older notifications...</a>
                 </span>

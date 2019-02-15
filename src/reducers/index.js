@@ -4,12 +4,16 @@ import snackbar from "./snackbarReducer";
 import auth from "./auth";
 import user from "./user";
 import posts from "./posts";
+import comments from "./comments";
+import profile from "./profile";
 const rootReducer = combineReducers({
   form: FormReducer,
   snackbar,
   auth,
   user,
-  posts
+  posts,
+  comments,
+  profile
 });
 
 export default rootReducer;
