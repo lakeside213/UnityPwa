@@ -14,6 +14,7 @@ let config = {
   }
 };
 export const createPost = (formValues, history) => {
+  console.log(config);
   return async function(dispatch) {
     const response = await axios.post(
       "https://morning-brook-29277.herokuapp.com/api/post",
