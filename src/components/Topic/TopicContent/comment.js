@@ -11,7 +11,7 @@ class Comment extends Component {
 
   componentDidMount() {
     axios
-      .post("https://morning-brook-29277.herokuapp.com/user", {
+      .post("https://morning-brook-29277.herokuapp.com/api/user", {
         id: this.props._user
       })
       .then(res => {
@@ -21,7 +21,7 @@ class Comment extends Component {
     if (this.props._responseUser) {
       console.log("es gibts" + this.props._responseUser);
       axios
-        .post("https://morning-brook-29277.herokuapp.com/user", {
+        .post("https://morning-brook-29277.herokuapp.com/api/user", {
           id: this.props._responseUser
         })
         .then(res => {
