@@ -9,7 +9,7 @@ import {
   Redirect
 } from "react-router-dom";
 import ScrollToTop from "./scrollToTop";
-import Snackbar from "./components/Snackbar";
+import Toasts from "./components/utils/toasts";
 import Auth from "./components/Auth";
 import Main from "./Main";
 import { connect } from "react-redux";
@@ -35,6 +35,7 @@ class App extends Component {
                   <Route component={Main} path="/app" />
                   <Route component={Auth} path="/auth" />
                 </Switch>
+                <Toasts />
               </Fragment>
             )}
           />

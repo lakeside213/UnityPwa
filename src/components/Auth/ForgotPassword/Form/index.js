@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { addSnackbar } from "../../../../actions/snackbarActions";
+
 class Form extends Component {
   renderInput({ input, labelName, placeholder, meta, type }) {
     return (
@@ -24,8 +24,6 @@ class Form extends Component {
   }
   onSubmit(formValues) {
     console.log(formValues);
-
-    addSnackbar("Passwords do not match");
   }
   render() {
     const { handleSubmit } = this.props;

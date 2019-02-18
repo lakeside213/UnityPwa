@@ -23,7 +23,7 @@ class TopicContent extends Component {
   }
 
   renderComments() {
-    return _.map(this.props.comments, comment => {
+    return this.props.comments.map(comment => {
       return (
         <Fragment key={comment._id}>
           <Comment
@@ -44,7 +44,14 @@ class TopicContent extends Component {
   }
 
   render() {
-    const { post, user, comments, replyComment, responseUserId } = this.props;
+    const {
+      post,
+      user,
+      comments,
+      replyComment,
+      responseUserId,
+      poster
+    } = this.props;
 
     return (
       <div class="topics">
@@ -52,21 +59,21 @@ class TopicContent extends Component {
         <div class="topics__body">
           <div class="topics__content">
             <div class="topic">
-              <TopicHead user={user} createdAt={post.createdAt} />
+              <TopicHead user={poster} createdAt={post.createdAt} />
               <div class="topic__content">
                 <TopicText description={post.description} />
                 <TopicFooter
                   views={post.views}
                   _id={post._id}
                   likes={post.likes.length}
-                  liked={post.likes.includes(user._id)}
+                  liked={!user ? false : post.likes.includes(user._id)}
                 />
               </div>
             </div>
             <div class="topic">
               <div class="topic__content">
                 <TopicInfo
-                  user={user}
+                  user={poster}
                   createdAt={post.createdAt}
                   views={post.views}
                   likes={post.likes.length}
@@ -74,7 +81,7 @@ class TopicContent extends Component {
                 />{" "}
                 <TopicControls
                   post={post._id}
-                  bookmarked={user.bookmarks.includes(post._id)}
+                  bookmarked={user ? false : user.bookmarks.includes(post._id)}
                 />
               </div>
             </div>
@@ -91,9 +98,4 @@ class TopicContent extends Component {
   }
 }
 
-export default withRouter(
-  connect(
-    null,
-    null
-  )(TopicContent)
-);
+export default withRouter(TopicContent);

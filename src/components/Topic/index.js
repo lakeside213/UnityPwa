@@ -4,7 +4,7 @@ import TopicContent from "./TopicContent";
 import Posts from "../Feed/Posts";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchPost, fetchComments } from "../../actions/postActions";
+import { fetchPost } from "../../actions/postActions";
 import { fetchUser } from "../../actions/authActions";
 import Loader from "../utils/components/loader";
 class Topic extends Component {
@@ -15,23 +15,30 @@ class Topic extends Component {
     };
   }
   componentDidMount() {
-    const { fetchPost, fetchUser, fetchComments, match } = this.props;
+    const { fetchPost, fetchUser, auth, match } = this.props;
     const id = match.params.id;
-
-    this.setState({ postId: id });
-    fetchUser();
     fetchPost(id);
-    fetchComments(id);
+    this.setState({ postId: id });
+    if (auth) {
+      fetchUser();
+    }
   }
 
   render() {
-    const { post, user, comments } = this.props;
+    const { post, user, comments, auth, poster } = this.props;
+
     return (
       <main>
         <div class="container">
           <TopicNav />
-          {post && user ? (
-            <TopicContent post={post} user={user} comments={comments} />
+          {post && poster ? (
+            <TopicContent
+              post={post}
+              user={user}
+              poster={poster}
+              comments={comments}
+              auth={auth}
+            />
           ) : (
             <Loader />
           )}
@@ -41,13 +48,19 @@ class Topic extends Component {
   }
 }
 
-function mapStateToProps({ posts, user, comments }, ownProps) {
-  return { post: posts[ownProps.match.params.id], user, comments };
+function mapStateToProps({ posts, user, auth }, ownProps) {
+  return {
+    post: posts.post.post,
+    poster: posts.post.user,
+    comments: posts.post.comments,
+    auth: auth.authenticated,
+    user
+  };
 }
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchPost, fetchComments, fetchUser }
+    { fetchPost, fetchUser }
   )(Topic)
 );

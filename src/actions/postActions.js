@@ -7,7 +7,9 @@ import {
   FETCH_COMMENTS
 } from "./types";
 import axios from "axios";
+import { URL } from "../url";
 import { reset } from "redux-form";
+import { addToast } from "./toastActions";
 let config = {
   headers: {
     authorization: localStorage.getItem("token")
@@ -16,12 +18,8 @@ let config = {
 export const createPost = (formValues, history) => {
   console.log(config);
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/post",
-      formValues,
-      config
-    );
-    console.log(response);
+    const response = await axios.post(`${URL}/api/post`, formValues, config);
+
     history.push(`/app/topic/${response.data}`);
     dispatch({
       type: FETCH_USER,
@@ -31,10 +29,7 @@ export const createPost = (formValues, history) => {
 };
 export const fetchPosts = () => {
   return async function(dispatch) {
-    const response = await axios.get(
-      "https://morning-brook-29277.herokuapp.com/api/posts"
-    );
-    console.log(response);
+    const response = await axios.get(`${URL}/api/posts`);
 
     dispatch({
       type: FETCH_POSTS,
@@ -44,12 +39,9 @@ export const fetchPosts = () => {
 };
 export const fetchPost = id => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/fetch/post",
-      {
-        id
-      }
-    );
+    const response = await axios.post(`${URL}/api/fetch/post`, {
+      id
+    });
 
     dispatch({
       type: FETCH_POST,
@@ -57,49 +49,34 @@ export const fetchPost = id => {
     });
   };
 };
-export const fetchComments = _post => {
-  return async function(dispatch) {
-    console.log(_post);
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/fetch/comment",
-      {
-        _post: _post
-      }
-    );
-    console.log(response);
 
-    dispatch({
-      type: FETCH_COMMENTS,
-      payload: response.data
-    });
-  };
-};
 export const postComment = ({ description }, _post, _responseUser) => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/post/comment",
-      {
-        _responseUser,
-        _post,
-        description
-      },
-      config
-    );
-    dispatch(reset("addcomment"));
-    dispatch({
-      type: FETCH_COMMENTS,
-      payload: response.data
-    });
+    if (!config.authorization) {
+      dispatch(addToast({ message: "Please sign-in first" }));
+    } else {
+      const response = await axios.post(
+        `${URL}/api/post/comment`,
+        {
+          _responseUser,
+          _post,
+          description
+        },
+        config
+      );
+      dispatch(reset("addcomment"));
+      dispatch({
+        type: FETCH_COMMENTS,
+        payload: response.data
+      });
+    }
   };
 };
 export const filterPosts = category => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/post/category",
-      {
-        category: category
-      }
-    );
+    const response = await axios.post(`${URL}/api/post/category`, {
+      category: category
+    });
     console.log(response);
     dispatch({
       type: FETCH_POSTS,
@@ -110,17 +87,21 @@ export const filterPosts = category => {
 
 export const likeToggle = _id => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/post/like",
-      {
-        _id: _id
-      },
-      config
-    );
+    if (!config.authorization) {
+      dispatch(addToast({ message: "Please sign-in first" }));
+    } else {
+      const response = await axios.post(
+        `${URL}/api/post/like`,
+        {
+          _id: _id
+        },
+        config
+      );
 
-    dispatch({
-      type: FETCH_POST,
-      payload: response.data.post
-    });
+      dispatch({
+        type: FETCH_POST,
+        payload: response.data.post
+      });
+    }
   };
 };

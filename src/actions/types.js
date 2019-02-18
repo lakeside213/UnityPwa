@@ -1,5 +1,5 @@
-export const ADD_SNACKBAR = "ADD_SNACKBAR";
-export const REMOVE_SNACKBAR = "REMOVE_SNACKBAR";
+export const ADD_TOAST = "ADD_TOAST";
+export const REMOVE_TOAST = "REMOVE_TOAST";
 export const AUTH_USER = "AUTH_USER";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGOUT = "LOGOUT";

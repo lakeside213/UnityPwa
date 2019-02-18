@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import dateFns from "date-fns";
+import { URL } from "../../../url";
 class PostAvatar extends Component {
   state = {
     dropdownOpen: false,
@@ -10,7 +11,7 @@ class PostAvatar extends Component {
 
   componentDidMount() {
     axios
-      .post("https://morning-brook-29277.herokuapp.com/api/user", {
+      .post(`${URL}/api/user`, {
         id: this.props.userID
       })
       .then(res => {

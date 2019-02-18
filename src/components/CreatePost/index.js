@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "./form";
-
-export default function CreatePost() {
+import RequireAuth from "../utils/requireAuth";
+export default RequireAuth(function CreatePost() {
   return (
     <main>
       <div class="container">
@@ -17,4 +17,4 @@ export default function CreatePost() {
       </div>
     </main>
   );
-}
+});

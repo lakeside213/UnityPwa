@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dateFns from "date-fns";
-
+import { URL } from "../../../url";
 class Comment extends Component {
   state = {
     user: {},
@@ -11,7 +11,7 @@ class Comment extends Component {
 
   componentDidMount() {
     axios
-      .post("https://morning-brook-29277.herokuapp.com/api/user", {
+      .post(`${URL}/api/user`, {
         id: this.props._user
       })
       .then(res => {
@@ -21,7 +21,7 @@ class Comment extends Component {
     if (this.props._responseUser) {
       console.log("es gibts" + this.props._responseUser);
       axios
-        .post("https://morning-brook-29277.herokuapp.com/api/user", {
+        .post(`${URL}/api/user`, {
           id: this.props._responseUser
         })
         .then(res => {

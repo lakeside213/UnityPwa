@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import dateFns from "date-fns";
 class TopicInfo extends Component {
-  c;
-
   render() {
     let { views, likes, comments, user } = this.props;
 

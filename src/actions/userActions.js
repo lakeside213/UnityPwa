@@ -1,5 +1,7 @@
 import axios from "axios";
 import { FETCH_PROFILE, BOOKMARK_POST, FETCH_USER } from "./types";
+import { URL } from "../url";
+import { addToast } from "./toastActions";
 let config = {
   headers: {
     authorization: localStorage.getItem("token")
@@ -7,13 +9,10 @@ let config = {
 };
 export const fetchProfile = (id, feed) => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/profile",
-      {
-        id,
-        feed
-      }
-    );
+    const response = await axios.post(`${URL}/api/profile`, {
+      id,
+      feed
+    });
 
     dispatch({
       type: FETCH_PROFILE,
@@ -24,17 +23,21 @@ export const fetchProfile = (id, feed) => {
 
 export const bookmarkPost = _post => {
   return async function(dispatch) {
-    const response = await axios.post(
-      "https://morning-brook-29277.herokuapp.com/api/user/bookmark",
-      {
-        _post
-      },
-      config
-    );
-    console.log(response);
-    dispatch({
-      type: FETCH_USER,
-      payload: response.data
-    });
+    if (!config.authorization) {
+      dispatch(addToast({ message: "Please sign-in first" }));
+    } else {
+      const response = await axios.post(
+        `${URL}/api/user/bookmark`,
+        {
+          _post
+        },
+        config
+      );
+
+      dispatch({
+        type: FETCH_USER,
+        payload: response.data
+      });
+    }
   };
 };

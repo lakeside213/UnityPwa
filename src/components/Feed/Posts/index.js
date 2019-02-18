@@ -9,7 +9,7 @@ class Posts extends Component {
     this.props.fetchPosts();
   }
   renderPost() {
-    return _.map(this.props.posts, post => {
+    return this.props.posts.map(post => {
       return (
         <Fragment key={post._id}>
           <Post
@@ -36,7 +36,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts };
+  return { posts: state.posts.posts };
 }
 export default connect(
   mapStateToProps,

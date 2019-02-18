@@ -32,6 +32,7 @@ class FeedNav extends Component {
             <ul class="dropdown__catalog row">
               {CATEGORIES.map(category => (
                 <Category
+                  key={category.categoryName}
                   categoryName={category.categoryName}
                   categoryColor={category.categoryColor}
                   menu={true}
@@ -44,7 +45,11 @@ class FeedNav extends Component {
           <Dropdown name={tag}>
             <div class="tags">
               {TAGS.map(tag => (
-                <Tag tagName={tag.tagName} tagColor={tag.tagColor} />
+                <Tag
+                  key={tag.tagName}
+                  tagName={tag.tagName}
+                  tagColor={tag.tagColor}
+                />
               ))}
               <Tag tagName="all " tagColor="4f87b0" />
             </div>

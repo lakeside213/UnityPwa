@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Headings from "./postsHead";
 import Post from "./post";
 
@@ -11,15 +11,16 @@ class Feed extends Component {
         <div class="posts__body">
           {data.map(item => {
             return (
-              <Post
-                key={item._id}
-                id={item._id}
-                title={item.title}
-                category={item.category}
-                createdAt={item.createdAt}
-                views={item.views}
-                description={item.description}
-              />
+              <Fragment key={item._id}>
+                <Post
+                  id={item._id}
+                  title={item.title}
+                  category={item.category}
+                  createdAt={item.createdAt}
+                  views={item.views}
+                  description={item.description}
+                />
+              </Fragment>
             );
           })}
         </div>
