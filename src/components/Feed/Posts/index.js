@@ -4,6 +4,7 @@ import Post from "./post";
 import { fetchPosts } from "../../../actions/postActions";
 import _ from "lodash";
 import { connect } from "react-redux";
+import Loader from "../../utils/components/loader";
 class Posts extends Component {
   componentDidMount() {
     this.props.fetchPosts();
@@ -26,6 +27,9 @@ class Posts extends Component {
     });
   }
   render() {
+    if (!this.props.postsHead) {
+      return <Loader />;
+    }
     return (
       <div class="posts">
         <Headings />

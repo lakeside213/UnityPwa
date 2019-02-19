@@ -7,7 +7,7 @@ export const fetchUser = () => {
   return async function(dispatch) {
     let config = {
       headers: {
-        authorization: localStorage.getItem("token")
+        bearer: localStorage.getItem("token")
       }
     };
     const response = await axios.get(`${URL}/current_user`, config);
