@@ -27,7 +27,7 @@ class Posts extends Component {
     });
   }
   render() {
-    if (!this.props.postsHead) {
+    if (!this.props.posts) {
       return <Loader />;
     }
     return (

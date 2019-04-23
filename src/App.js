@@ -19,7 +19,7 @@ const supportsHistory = "pushState" in window.history;
 class App extends Component {
   componentDidMount() {
     let { auth, fetchUser } = this.props;
-    if (auth) {
+    if (auth.authenticated) {
       fetchUser();
     }
   }
